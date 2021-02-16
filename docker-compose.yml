@@ -1,0 +1,102 @@
+---
+version: "3.8"
+services:
+  redis:
+    image: redis:5
+    ports:
+      - 6379
+
+  rabbitmq:
+    image: rabbitmq:3.5-management
+    environment:
+      RABBITMQ_DEFAULT_USER: magento
+      RABBITMQ_DEFAULT_PASS: magento
+      RABBITMQ_DEFAULT_VHOST: magento
+    ports:
+      - 15672:15672
+      - 5672:5672
+      - 5671:5671
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.6.2
+    environment:
+      http.host: 0.0.0.0
+      transport.host: 127.0.0.1
+      cluster.name: es-cluster
+      bootstrap.memory_lock: "true"
+      ES_JAVA_OPTS: -Xms512m -Xmx512m
+      discovery.zen.minimum_master_nodes: 1
+      discovery.type: single-node
+      xpack.security.enabled: "false"
+      xpack.monitoring.enabled: "false"
+      xpack.ml.enabled: "false"
+      xpack.graph.enabled: "false"
+      xpack.watcher.enabled: "false"
+    ports:
+      - 6200
+    volumes:
+      - vol_local_mg2_elasticsearch:/usr/share/elasticsearch/data
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.6.2
+    environment:
+      XPACK_MONITORING_ENABLED: "false"
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    ports:
+      - 5601:5601
+    depends_on:
+      - elasticsearch
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - 1025
+      - 8025:8025
+
+  php:
+    build:
+      context: ./php
+    volumes:
+      - ./php/install-magento.sh:/usr/bin/install-magento
+      - ./html:/usr/share/nginx/html
+    ports:
+      - 9000
+
+  mysql:
+    image: mysql:5.7
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - 3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: magento
+      MYSQL_USER: magento
+      MYSQL_PASSWORD: magento
+    volumes:
+      - vol_local_mg2_mysql:/var/lib/mysql
+
+  nginx:
+    build:
+      context: ./nginx
+    ports:
+      - 80
+    volumes:
+      - ./html:/usr/share/nginx/html
+      - ./nginx/magento.conf:/etc/nginx/conf.d/default.conf
+
+  varnish:
+    image: varnish:6.3.1
+    ports:
+      - 80:80
+      - 6082
+    tmpfs:
+      - /var/lib/varnish:exec
+    volumes:
+      - ./varnish/varnish.vcl:/etc/varnish/default.vcl:ro
+
+volumes:
+  vol_local_mg2_mysql:
+    driver: local
+  vol_local_mg2_elasticsearch:
+    driver: local
