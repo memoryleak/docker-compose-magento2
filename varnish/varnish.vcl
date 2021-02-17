@@ -9,19 +9,21 @@ backend default {
     .host = "nginx";
     .port = "80";
     .first_byte_timeout = 600s;
-   #  .probe = {
-   #      .url = "/pub/health_check.php";
-   #      .timeout = 2s;
-   #      .interval = 5s;
-   #      .window = 10;
-   #      .threshold = 5;
-   # }
+    .probe = {
+        .url = "/pub/health_check.php";
+        .timeout = 2s;
+        .interval = 5s;
+        .window = 10;
+        .threshold = 5;
+   }
 }
 
 acl purge {
     "localhost";
     "php";
     "varnish";
+    "nginx";
+    "host.docker.internal";
 }
 
 sub vcl_recv {
@@ -130,7 +132,7 @@ sub vcl_hash {
     if (req.http.X-Forwarded-Proto) {
         hash_data(req.http.X-Forwarded-Proto);
     }
-
+    
 
     if (req.url ~ "/graphql") {
         call process_graphql_headers;
