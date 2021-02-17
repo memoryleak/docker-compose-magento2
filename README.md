@@ -32,6 +32,10 @@ Varnish. Use following specific values:
 * **Backend host** : `nginx`
 * **Access list** : `php`
 
+## Elasticsearch
+Follow [Official docs](https://devdocs.magento.com/guides/v2.4/config-guide/elasticsearch/configure-magento.html) to 
+configure ElasticSearch. Use `elasticsearch` as the host. 
+
 ## xdebug
 Enable the module in `php/xdebug.ini`. Make sure the `PHP_IDE_CONFIG` environment variable is matching your PHPStorm 
 setting for `serverName`.
