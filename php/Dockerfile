@@ -50,3 +50,4 @@ RUN echo "opcache.memory_consumption = 4096" >> /usr/local/etc/php/conf.d/docker
 RUN userdel www-data
 RUN addgroup --gid 1000 www-data && \
     adduser --system --uid 1000 --gid 1000 www-data
+WORKDIR /usr/share/nginx/html
