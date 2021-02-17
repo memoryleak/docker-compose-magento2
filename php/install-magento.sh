@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-cd /usr/share/nginx/html;
+cd /usr/share/nginx/html || exit;
 
 rm -rf var/cache/*
 rm -rf generated/metadata/*
@@ -45,8 +45,5 @@ bin/magento setup:install \
 	--admin-password=admin123_ \
 	--admin-email=admin@example.com \
 	--admin-firstname=ADMIN-FIRSTNAME \
-	--admin-lastname=ADMIN-LASTNAME \
-	--use-sample-data
+	--admin-lastname=ADMIN-LASTNAME
 
-bin/magento sampledata:deploy
-bin/magento setup:upgrade
