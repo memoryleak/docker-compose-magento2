@@ -51,7 +51,7 @@ docker-compose exec -w /var/www/html php \
 	--use-rewrites=1 \
 	--use-secure=0 \
 	--base-url-secure=https://$MAGENTO_BASE_URL/ \
-	--use-secure-admin=1 \
+	--use-secure-admin=0 \
 	--admin-user=admin \
 	--admin-password=admin123_ \
 	--admin-email=admin@example.com \
