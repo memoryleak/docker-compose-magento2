@@ -60,9 +60,12 @@ services:
       - "PHP_IDE_CONFIG=serverName=local-mg2.localhost"
 
     volumes:
+      - vol_local_mg2_code:/var/www
+      - ~/.config/composer:/root/.composer
+      - ~/.ssh/:/root/.ssh
       - ./php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
       - ./php/install-magento.sh:/usr/bin/install-magento
-      - ./html:/usr/share/nginx/html
+
     ports:
       - 9000
     depends_on:
@@ -89,9 +92,9 @@ services:
     build:
       context: ./nginx
     ports:
-      - 80
+      - 8080:80
     volumes:
-      - ./html:/usr/share/nginx/html
+      - vol_local_mg2_code:/var/www
       - ./nginx/magento.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - php
@@ -109,6 +112,8 @@ services:
       - nginx
 
 volumes:
+  vol_local_mg2_code:
+    driver: local
   vol_local_mg2_mysql:
     driver: local
   vol_local_mg2_elasticsearch:
