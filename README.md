@@ -2,7 +2,9 @@
 This is a bare minimum Docker based environment to deploy Magento 2 commerce edition.
 
 # Instructions
-Execute `deploy.sh MAGENTO_BASE_URL` with the desired base url as the parameter.
+Execute `deploy.sh MAGENTO_BASE_URL` with the desired base url as the parameter. Be aware that you should have a
+`~/.config/composer` folder locally, it will be mounted into the PHP container for composer setup. If you use a **Mac**
+change it accoringly (`~/.composer`).
 
 # Magento commands
 Simply execute followiinig command in the location of your `docker-compose.yml`
