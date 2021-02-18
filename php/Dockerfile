@@ -44,6 +44,8 @@ RUN pecl install redis \
     && pecl install xdebug \
     && docker-php-ext-enable redis xdebug
 
+RUN curl -so /usr/local/bin/composer https://getcomposer.org/download/1.10.20/composer.phar
+
 RUN echo "opcache.memory_consumption = 4096" >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini && \
     echo "opcache.max_accelerated_files=140000" >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini && \
     echo "opcache.consistency_checks=0" >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini && \
