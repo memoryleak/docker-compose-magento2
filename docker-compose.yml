@@ -62,7 +62,6 @@ services:
     volumes:
       - vol_local_mg2_code:/var/www
       - ~/.config/composer:/root/.composer
-      - ~/.ssh/:/root/.ssh
       - ./php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
       - ./php/install-magento.sh:/usr/bin/install-magento
 
