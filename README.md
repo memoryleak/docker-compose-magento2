@@ -17,15 +17,20 @@ In the `bin` folder you'll find various scripts:
 6. `bin/docker-compose-delete.sh` Stops running containers and removes all containers.
 7. `bin/mysql-import.sh` Imports the provides mysqldump into the database.
 
-In order to do a clean installation use following command combination:
-
+In order to do a clean installation you have two options:
+```sh
+./bin/setup.sh magento.localhost
+```
+This will execute these commands in the following order:
 ```sh
 ./bin/docker-compose-delete.sh && \
 ./bin/magento-delete-project.sh && \
 ./bin/magento-create-project.sh && \
-./bin/magento-install.sh && \
+./bin/magento-install.sh magento.localhost && \
 ./bin/magento-install-sampledata.sh
 ```
+
+Or you can execute these single commands to your liking.
 
 # Magento commands
 To access the Magento CLI run following command:
