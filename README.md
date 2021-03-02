@@ -25,7 +25,7 @@ This will execute these commands in the following order:
 ```sh
 ./scripts/docker-compose-delete.sh
 ./scripts/magento-delete-project.sh
-./scripts/magento-create-project.sh
+./scripts/magento-create-project.sh 2.3.6
 ./scripts/magento-install.sh magento.localhost
 ./scripts/magento-install-sampledata.sh
 ```
