@@ -1,13 +1,17 @@
 #!/usr/bin/env bash
 if [ $# -ne 1 ]
   then
-    echo "USAGE: magento-install.sh <BASE_URL>"; exit;
+    printf "${CYAN}USAGE: magento-install.sh <BASE_URL>${NC}\n"; exit;
 fi
 
 MAGENTO_BASE_URL=$1
-echo "Make sure composer dependencies are installed"
+CYAN='\033[0;36m'
+NC='\033[0m' # No Color
+
+printf "${CYAN}Make sure composer dependencies are installed${NC}\n"
 docker-compose run --rm -w /var/www/html php-composer composer install
-echo "Starting composer dependency installation"
+
+printf "${CYAN}Starting Magento installation${NC}\n"
 docker-compose run --rm -w /var/www/html php-composer bin/magento setup:install  \
 	--backend-frontname admin \
 	--amqp-host rabbitmq \
@@ -46,14 +50,17 @@ docker-compose run --rm -w /var/www/html php-composer bin/magento setup:install 
 	--admin-firstname ADMIN-FIRSTNAME  \
 	--admin-lastname ADMIN-LASTNAME
 
-echo "Starting setup:upgrade"
+printf "${CYAN}Starting setup:upgrade${NC}\n"
 docker-compose run --rm -w /var/www/html php-composer php -d memory_limit=-1 bin/magento setup:upgrade
+
+printf "${CYAN}Starting cache:clean${NC}\n"
 docker-compose run --rm -w /var/www/html php-composer php -d memory_limit=-1 bin/magento cache:clean
 
-echo "Setup permissions"
+printf "${CYAN}Setup permissions${NC}\n"
 docker-compose run --rm -w /var/www/html php chown -R www-data:www-data .
-docker-compose run --rm -w /var/www/html php find var generated pub/static pub/media app/etc -type f -exec chmod g+w {} +
-docker-compose run --rm -w /var/www/html php find var generated pub/static pub/media app/etc -type d -exec chmod g+ws {} +
 
-echo "Start docker-compose environment"
-docker-compose up -d
+printf "${CYAN}Starting chmod for files${NC}\n"
+docker-compose run --rm -w /var/www/html php find var generated pub/static pub/media app/etc -type f -exec chmod g+w {} +
+
+printf "${CYAN}Starting chmod for dirs${NC}\n"
+docker-compose run --rm -w /var/www/html php find var generated pub/static pub/media app/etc -type d -exec chmod g+ws {} +
