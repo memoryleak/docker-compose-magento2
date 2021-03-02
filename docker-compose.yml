@@ -53,7 +53,8 @@ services:
       - rabbitmq
 
   php-composer:
-    image: memoryleak/php:7.3-composer
+    build:
+      context: build/php-composer
     environment:
       COMPOSER_HOME: /root/.composer
     volumes:

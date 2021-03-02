@@ -14,7 +14,7 @@ printf "${CYAN}Delete existing composer images...${NC}\n"
 printf "${CYAN}Delete existing project files...${NC}\n"
 ./scripts/magento-delete-project.sh 
 printf "${CYAN}Create Magento project...${NC}\n"
-docker-compose run -v ~/.git-credentials:/root/.git-credentials -v ~/.ssh:/root/.ssh --rm -w /var/www php-composer git clone $1 html
+docker-compose run --rm -w /var/www php-composer git clone --depth 1 $1 html
 printf "${CYAN}Install Magento project...${NC}\n"
 ./scripts/magento-install.sh $MAGENTO_BASE_URL
 printf "${CYAN}Configure Magento project...${NC}\n"
@@ -23,7 +23,3 @@ printf "${CYAN}Install sample data${NC}\n"
 ./scripts/magento-install-sampledata.sh
 printf "${CYAN}Configure Magento${NC}\n"
 ./scripts/magento-configure.sh
-
-
-
-
