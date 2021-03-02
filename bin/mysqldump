@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+docker-compose exec mysql mysqldump -proot

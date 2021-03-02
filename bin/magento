@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+docker-compose run --rm php-composer php -d memory_limit=-1 bin/magento
