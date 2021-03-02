@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
-if [ $# -ne 1 ]
+if [ $# -ne 2 ]
   then
-    echo "USAGE: setup.sh <BASE_URL>"; exit;
+    echo "USAGE: magento-setup.sh <VERSION> <BASE_URL>"; exit;
 fi
 
-MAGENTO_BASE_URL=$1
+MAGENTO_VERSION=$1
+MAGENTO_BASE_URL=$2
 
 CYAN='\033[0;36m'
 NC='\033[0m' # No Color
@@ -13,7 +14,7 @@ printf "${CYAN}Delete existing composer images...${NC}\n"
 printf "${CYAN}Delete existing project files...${NC}\n"
 ./scripts/magento-delete-project.sh 
 printf "${CYAN}Create Magento project...${NC}\n"
-./scripts/magento-create-project.sh 
+./scripts/magento-create-project.sh $MAGENTO_VERSION
 printf "${CYAN}Install Magento project...${NC}\n"
 ./scripts/magento-install.sh $MAGENTO_BASE_URL
 printf "${CYAN}Configure Magento project...${NC}\n"

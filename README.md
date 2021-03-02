@@ -19,14 +19,14 @@ In the `bin` folder you'll find various scripts:
 
 In order to do a clean installation you have two options:
 ```sh
-./scripts/setup.sh magento.localhost
+./scripts/magento-setup.sh 2.3.6 magento.localhost
 ```
 This will execute these commands in the following order:
 ```sh
-./scripts/docker-compose-delete.sh && \
-./scripts/magento-delete-project.sh && \
-./scripts/magento-create-project.sh && \
-./scripts/magento-install.sh magento.localhost && \
+./scripts/docker-compose-delete.sh
+./scripts/magento-delete-project.sh
+./scripts/magento-create-project.sh
+./scripts/magento-install.sh magento.localhost
 ./scripts/magento-install-sampledata.sh
 ```
 
