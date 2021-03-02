@@ -1,6 +1,1 @@
-.vscode
-traefik
-.DS_Store
-html
-.idea
-php/ssh
+etc/ssh
