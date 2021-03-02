@@ -7,7 +7,7 @@ fi
 MAGENTO_BASE_URL=$1
 
 echo "Starting composer dependency installation"
-docker-compose run -w /var/www/html php-composer bin/magento setup:install  \
+docker-compose run --rm -w /var/www/html php-composer bin/magento setup:install  \
 	--backend-frontname admin \
 	--amqp-host rabbitmq \
 	--amqp-port 5672  \
@@ -46,16 +46,13 @@ docker-compose run -w /var/www/html php-composer bin/magento setup:install  \
 	--admin-lastname ADMIN-LASTNAME
 
 echo "Starting setup:upgrade"
-docker-compose run -w /var/www/html php-composer php -d memory_limit=-1 bin/magento setup:upgrade
-docker-compose run -w /var/www/html php-composer php -d memory_limit=-1 bin/magento cache:clean
-
-echo "Starting indexer:reindex"
-docker-compose run -w /var/www/html php-composer php -d memory_limit=-1 bin/magento indexer:reindex
+docker-compose run --rm -w /var/www/html php-composer php -d memory_limit=-1 bin/magento setup:upgrade
+docker-compose run --rm -w /var/www/html php-composer php -d memory_limit=-1 bin/magento cache:clean
 
 echo "Setup permissions"
-docker-compose run -w /var/www/html php chown -R www-data:www-data .
-docker-compose run -w /var/www/html php find var generated pub/static pub/media app/etc -type f -exec chmod g+w {} +
-docker-compose run -w /var/www/html php find var generated pub/static pub/media app/etc -type d -exec chmod g+ws {} +
+docker-compose run --rm -w /var/www/html php chown -R www-data:www-data .
+docker-compose run --rm -w /var/www/html php find var generated pub/static pub/media app/etc -type f -exec chmod g+w {} +
+docker-compose run --rm -w /var/www/html php find var generated pub/static pub/media app/etc -type d -exec chmod g+ws {} +
 
 echo "Start docker-compose environment"
 docker-compose up -d

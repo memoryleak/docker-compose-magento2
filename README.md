@@ -45,15 +45,3 @@ Go to `http://MAGENTO_BASE_URL/admin` with username `admin` and password `admin1
 * RabbitMQ: `http://MAGENTO_BASE_URL:15672/` with username and password `magento`
 * Mailhog: `http://MAGENTO_BASE_URL:8025/` with no credentials
 * Kibana: `http://MAGENTO_BASE_URL:5601/` with no credentials
-
-## Varnish
-Follow [Official docs](https://devdocs.magento.com/guides/v2.4/config-guide/varnish/config-varnish-magento.html) to configure
-Varnish. Use following specific values:
-
-* **Backend host** : `nginx`
-* **Access list** : `php`
-
-## Elasticsearch
-Follow [Official docs](https://devdocs.magento.com/guides/v2.4/config-guide/elasticsearch/configure-magento.html) to
-configure ElasticSearch. Use `elasticsearch` as the host.
-

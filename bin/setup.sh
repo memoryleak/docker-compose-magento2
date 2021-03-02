@@ -16,5 +16,9 @@ printf "${CYAN}Create Magento project...${NC}\n"
 ./bin/magento-create-project.sh 
 printf "${CYAN}Install Magento project...${NC}\n"
 ./bin/magento-install.sh $MAGENTO_BASE_URL
+printf "${CYAN}Configure Magento project...${NC}\n"
+./bin/magento-configure.sh
 printf "${CYAN}Install sample data${NC}\n"
 ./bin/magento-install-sampledata.sh
+printf "${CYAN}Configure Magento${NC}\n"
+./bin/magento-configure.sh

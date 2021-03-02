@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-docker-compose run php rm -rf /var/www/html
+docker-compose run --rm php rm -rf /var/www/html
