@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+docker-compose run -w /var/www/html --rm php-composer composer "$@"

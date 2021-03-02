@@ -5,7 +5,8 @@ if [ $# -ne 1 ]
 fi
 
 MAGENTO_BASE_URL=$1
-
+echo "Make sure composer dependencies are installed"
+docker-compose run --rm -w /var/www/html php-composer composer install
 echo "Starting composer dependency installation"
 docker-compose run --rm -w /var/www/html php-composer bin/magento setup:install  \
 	--backend-frontname admin \
