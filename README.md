@@ -1,16 +1,36 @@
 # Description
 This is a bare minimum Docker based environment to deploy Magento 2 commerce edition.
 
+# Requirements
+* Running Docker daemon
+* User is in docker group
+* Composer is set up with credentials in `~/.config/composer`
+
 # Instructions
-Execute `deploy.sh MAGENTO_BASE_URL` with the desired base url as the parameter. Be aware that you should have a
-`~/.config/composer` folder locally, it will be mounted into the PHP container for composer setup. If you use a **Mac**
-change it accoringly (`~/.composer`).
+In the `bin` folder you'll find various scripts:
+
+1. `bin/magento-create-project.sh` Creates the Magento project using Composer.
+2. `bin/magento-delete-project.sh` Deletes the Magento project including all files.
+3. `bin/magento-delete-generated.sh` Deletes the Magento generated files.
+4. `bin/magento-install.sh` Installs Magento with a basic configuration.
+5. `bin/magento-install-sampledata.sh` Installs Magento sample data.
+6. `bin/docker-compose-delete.sh` Stops running containers and removes all containers.
+7. `bin/mysql-import.sh` Imports the provides mysqldump into the database.
+
+In order to do a clean installation use following command combination:
+
+```sh
+./bin/docker-compose-delete.sh && \
+./bin/magento-delete-project.sh && \
+./bin/magento-create-project.sh && \
+./bin/magento-install.sh && \
+./bin/magento-install-sampledata.sh
+```
 
 # Magento commands
-Simply execute followiinig command in the location of your `docker-compose.yml`
+To access the Magento CLI run following command:
 ```
-docker-compose exec -w /var/www/html php \
-	php -d memory_limit=-1 bin/magento
+docker-compose run --rm php bin/magento
 ```
 
 ## Backend
@@ -32,6 +52,3 @@ Varnish. Use following specific values:
 Follow [Official docs](https://devdocs.magento.com/guides/v2.4/config-guide/elasticsearch/configure-magento.html) to
 configure ElasticSearch. Use `elasticsearch` as the host.
 
-## xdebug
-Enable the module in `php/xdebug.ini`. Make sure the `PHP_IDE_CONFIG` environment variable is matching your PHPStorm
-setting for `serverName` in the `docker-compose.yml` file.
