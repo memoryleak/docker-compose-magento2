@@ -45,7 +45,7 @@ services:
     volumes:
       - vol_local_mg23_code:/var/www
     ports:
-      - 9000:9000
+      - 9000
     depends_on:
       - mysql
       - elasticsearch
